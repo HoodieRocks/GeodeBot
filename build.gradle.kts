@@ -36,6 +36,6 @@ tasks.build {
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("Main")
 }
 
