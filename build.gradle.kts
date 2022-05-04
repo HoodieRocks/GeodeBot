@@ -28,6 +28,13 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+tasks.build {
+    doFirst {
+        println("Building with Gradle version ${gradle.gradleVersion}")
+    }
+
+}
+
 application {
     mainClass.set("MainKt")
 }
