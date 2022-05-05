@@ -27,7 +27,7 @@ class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
     override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
         val interaction = event?.slashCommandInteraction
         if (interaction?.commandName == "idea") {
-            val type = interaction.getOptionStringValueByIndex(0)
+            val type: String = if(interaction.getOptionStringValueByIndex(0) == null) "" else interaction.getOptionStringValueByIndex(0).get()
             val url = URL("https://www.boredapi.com/api/activity?type=$type")
             val client = OkHttpClient()
             val request = Request.Builder()
@@ -48,7 +48,9 @@ class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
                 .setDescription("[Click here to learn more](https://www.boredapi.com/)")
                 .setColor(Color.CYAN)
 
-            interaction.createImmediateResponder().addEmbed(embed).respond()
+            interaction.createImmediateResponder().addEmbed(embed).respond().exceptionally {
+                interaction.createImmediateResponder().setContent("Not a valid option").respond().join()
+            }
         }
     }
 
