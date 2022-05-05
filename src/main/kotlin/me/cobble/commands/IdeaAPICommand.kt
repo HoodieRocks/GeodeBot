@@ -41,9 +41,9 @@ class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
                 .setTitle("Here's something to do!")
                 .addField("Activity", activity["activity"].toString().removeFirstLast())
                 .addField("Type", activity["type"].toString().removeFirstLast())
-                .addField("Participants", activity["participants"].toString().plus(" Participants").removeFirstLast())
+                .addField("Participants", activity["participants"].toString().plus(" Participants"))
                 .addField("Price", (activity["price"].toString().toFloat() * 10).toString().plus("$"))
-                .addField("Accessibility", activity["accessibility"].toString().removeFirstLast())
+                .addField("Accessibility", activity["accessibility"].toString())
                 .setDescription("[Click here to learn more](https://www.boredapi.com/)")
                 .setColor(Color.CYAN)
 
