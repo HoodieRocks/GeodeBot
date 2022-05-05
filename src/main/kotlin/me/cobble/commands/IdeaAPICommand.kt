@@ -35,15 +35,20 @@ class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
 
             val embed = EmbedBuilder()
                 .setTitle("Here's something to do!")
-                .addField("Activity", activity["activity"].toString().replace("\"", ""))
-                .addField("Type", activity["type"].toString().replace("\"", ""))
-                .addField("Participants", activity["participants"].toString().plus(" Participants").replace("\"", ""))
-                .addField("Price", df.format(activity["price"].toString().toFloat() * 100).toString().plus("$"))
-                .addField("Accessibility", activity["accessibility"].toString().replace("\"", ""))
+                .addField("Activity", activity["activity"].toString().removeFirstLast())
+                .addField("Type", activity["type"].toString().removeFirstLast())
+                .addField("Participants", activity["participants"].toString().plus(" Participants").removeFirstLast())
+                .addField("Price", df.format(activity["price"].toString().toFloat() * 10).toString().plus("$"))
+                .addField("Accessibility", activity["accessibility"].toString().removeFirstLast())
                 .setDescription("[Click here to learn more](https://www.boredapi.com/)")
                 .setColor(Color.CYAN)
 
             interaction.createImmediateResponder().addEmbed(embed).respond()
         }
+    }
+
+    // remove first and last letter of string
+    private fun String.removeFirstLast(): String {
+        return this.substring(1, this.length - 1)
     }
 }

@@ -33,11 +33,11 @@ class UselessFactCommand(api: DiscordApi) : SlashCommandCreateListener {
 
             val embed = EmbedBuilder()
                 .setTitle("Here's a fun fact!")
-                .setDescription(activity["text"].toString().replace("\"", ""))
+                .setDescription(activity["text"].toString().removeFirstAndLastCharacter())
                 .addField(
                     "Source",
-                    "[${activity["source"].toString().replace("\"", "")}](${
-                        activity["source_url"].toString().replace("\"", "")
+                    "[${activity["source"].toString().removeFirstAndLastCharacter()}](${
+                        activity["source_url"].toString().removeFirstAndLastCharacter()
                     })"
                 )
                 .setFooter("Powered by https://uselessfacts.jsph.pl/")
@@ -46,5 +46,10 @@ class UselessFactCommand(api: DiscordApi) : SlashCommandCreateListener {
             interaction.createImmediateResponder().addEmbed(embed).respond()
 
         }
+    }
+
+    // removes the first and last character of a string
+    private fun String.removeFirstAndLastCharacter(): String {
+        return this.substring(1, this.length - 1)
     }
 }
