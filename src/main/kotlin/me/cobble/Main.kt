@@ -17,13 +17,13 @@ fun main() {
     client.updateActivity(ActivityType.WATCHING, "for $prefix Commands")
     println("Set activity to \"Watching for $prefix Commands\"")
 
-    PingCommand(client, prefix)
+    PingCommand(client)
     StickCommand(client, prefix)
     UnstickCommand(client, prefix)
-    IdeaAPICommand(client, prefix)
-    UselessFactCommand(client, prefix)
+    IdeaAPICommand(client)
+    UselessFactCommand(client)
     HelpCommand(client, prefix)
-    InviteCommand(client, prefix)
+    InviteCommand(client)
     println("Loaded Command Listeners")
 
     client.addListener(MessageSentListener())

@@ -6,26 +6,27 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.javacord.api.DiscordApi
 import org.javacord.api.entity.message.embed.EmbedBuilder
-import org.javacord.api.event.message.MessageCreateEvent
-import org.javacord.api.listener.message.MessageCreateListener
+import org.javacord.api.event.interaction.SlashCommandCreateEvent
+import org.javacord.api.interaction.SlashCommand
+import org.javacord.api.listener.interaction.SlashCommandCreateListener
 import java.awt.Color
 import java.net.URL
 
-class UselessFactCommand(api: DiscordApi, private val prefix: String) : MessageCreateListener {
+class UselessFactCommand(api: DiscordApi) : SlashCommandCreateListener {
 
     init {
-        api.addMessageCreateListener(this)
+        api.addSlashCommandCreateListener(this)
+        SlashCommand.with("fact", "Get a random fact").createGlobal(api).join()
     }
 
-    override fun onMessageCreate(event: MessageCreateEvent?) {
-        if (event?.message?.content?.startsWith("${prefix}fact") == true) {
+    override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
+        val interaction = event?.slashCommandInteraction
+        if (interaction?.commandName == "fact") {
             val url = URL("https://uselessfacts.jsph.pl/random.json?language=en")
             val client = OkHttpClient()
             val request = Request.Builder()
                 .url(url)
                 .build()
-
-            event.message.channel.type()
 
             val response = client.newCall(request).execute()
             val activity = Json.parseToJsonElement(response.body()!!.string()).jsonObject
@@ -42,7 +43,7 @@ class UselessFactCommand(api: DiscordApi, private val prefix: String) : MessageC
                 .setFooter("Powered by https://uselessfacts.jsph.pl/")
                 .setColor(Color.CYAN)
 
-            event.message.channel.sendMessage(embed)
+            interaction.createImmediateResponder().addEmbed(embed).respond()
 
         }
     }

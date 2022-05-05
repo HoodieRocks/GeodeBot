@@ -6,27 +6,28 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.javacord.api.DiscordApi
 import org.javacord.api.entity.message.embed.EmbedBuilder
-import org.javacord.api.event.message.MessageCreateEvent
-import org.javacord.api.listener.message.MessageCreateListener
+import org.javacord.api.event.interaction.SlashCommandCreateEvent
+import org.javacord.api.interaction.SlashCommand
+import org.javacord.api.listener.interaction.SlashCommandCreateListener
 import java.awt.Color
 import java.net.URL
 import java.text.DecimalFormat
 
-class IdeaAPICommand(api: DiscordApi, private val prefix: String) : MessageCreateListener {
+class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
 
     init {
-        api.addMessageCreateListener(this)
+        api.addSlashCommandCreateListener(this)
+        SlashCommand.with("idea", "Here's something to do!").createGlobal(api).join()
     }
 
-    override fun onMessageCreate(event: MessageCreateEvent?) {
-        if (event?.message?.content?.startsWith("${prefix}idea") == true) {
+    override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
+        val interaction = event?.slashCommandInteraction
+        if(interaction?.commandName == "idea") {
             val url = URL("https://www.boredapi.com/api/activity")
             val client = OkHttpClient()
             val request = Request.Builder()
                 .url(url)
                 .build()
-
-            event.message.channel.type()
 
             val response = client.newCall(request).execute()
             val activity = Json.parseToJsonElement(response.body()!!.string()).jsonObject
@@ -42,8 +43,7 @@ class IdeaAPICommand(api: DiscordApi, private val prefix: String) : MessageCreat
                 .setDescription("[Click here to learn more](https://www.boredapi.com/)")
                 .setColor(Color.CYAN)
 
-            event.message.channel.sendMessage(embed)
-
+            interaction.createImmediateResponder().addEmbed(embed).respond()
         }
     }
 }
