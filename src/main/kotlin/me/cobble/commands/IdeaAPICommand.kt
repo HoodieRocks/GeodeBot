@@ -36,16 +36,24 @@ class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
 
             val response = client.newCall(request).execute()
             val activity = Json.parseToJsonElement(response.body()!!.string()).jsonObject
-
-            val embed = EmbedBuilder()
-                .setTitle("Here's something to do!")
-                .addField("Activity", activity["activity"].toString().removeFirstLast())
-                .addField("Type", activity["type"].toString().removeFirstLast())
-                .addField("Participants", activity["participants"].toString().plus(" Participants"))
-                .addField("Price", (activity["price"].toString().toFloat() * 10).toString().plus("$"))
-                .addField("Accessibility", activity["accessibility"].toString())
-                .setDescription("[Click here to learn more](https://www.boredapi.com/)")
-                .setColor(Color.CYAN)
+            val embed: EmbedBuilder
+            if(activity["error"] == null) {
+                embed = EmbedBuilder()
+                    .setTitle("Here's something to do!")
+                    .addField("Activity", activity["activity"].toString().removeFirstLast())
+                    .addField("Type", activity["type"].toString().removeFirstLast())
+                    .addField("Participants", activity["participants"].toString().plus(" Participants"))
+                    .addField("Price", (activity["price"].toString().toFloat() * 10).toString().plus("$"))
+                    .addField("Accessibility", activity["accessibility"].toString())
+                    .setDescription("[Click here to learn more](https://www.boredapi.com/)")
+                    .setColor(Color.CYAN)
+            } else {
+                embed = EmbedBuilder()
+                    .setTitle("Error")
+                    .addField("Error", activity["error"].toString().removeFirstLast())
+                    .setDescription("[Click here to learn more](https://www.boredapi.com/)")
+                    .setColor(Color.RED)
+            }
 
             interaction.createImmediateResponder().addEmbed(embed).respond().exceptionally {
                 interaction.createImmediateResponder().setContent("Not a valid option").respond().join()
