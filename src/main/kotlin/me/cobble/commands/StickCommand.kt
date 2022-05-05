@@ -1,10 +1,10 @@
 package me.cobble.commands
 
+import me.cobble.utilities.StickyUtils
 import org.javacord.api.DiscordApi
 import org.javacord.api.entity.message.embed.EmbedBuilder
 import org.javacord.api.event.message.MessageCreateEvent
 import org.javacord.api.listener.message.MessageCreateListener
-import me.cobble.utilities.StickyUtils
 import java.awt.Color
 
 class StickCommand(api: DiscordApi, private val prefix: String) : MessageCreateListener {

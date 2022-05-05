@@ -3,10 +3,8 @@ package me.cobble.commands
 import org.javacord.api.DiscordApi
 import org.javacord.api.entity.message.embed.EmbedBuilder
 import org.javacord.api.event.interaction.SlashCommandCreateEvent
-import org.javacord.api.event.message.MessageCreateEvent
 import org.javacord.api.interaction.SlashCommand
 import org.javacord.api.listener.interaction.SlashCommandCreateListener
-import org.javacord.api.listener.message.MessageCreateListener
 import java.awt.Color
 
 class HelpCommand(api: DiscordApi, private val prefix: String) : SlashCommandCreateListener {
@@ -21,13 +19,15 @@ class HelpCommand(api: DiscordApi, private val prefix: String) : SlashCommandCre
         if (interaction?.commandName == "help") {
             val embed = EmbedBuilder()
                 .setTitle("All commands")
-                .setDescription("`${prefix}help` - Shows this message\n" +
-                        "`/fact` - Shows a random fact\n" +
-                        "`/idea` - Shows a random idea\n" +
-                        "`${prefix}stick` - Sets a sticky message to last message\n" +
-                        "`${prefix}unstick` - Removes the sticky message\n" +
-                        "`/ping` - Pong!\n" +
-                        "`/invite` - Invite the bot to your server\n")
+                .setDescription(
+                    "`${prefix}help` - Shows this message\n" +
+                            "`/fact` - Shows a random fact\n" +
+                            "`/idea` - Shows a random idea\n" +
+                            "`${prefix}stick` - Sets a sticky message to last message\n" +
+                            "`${prefix}unstick` - Removes the sticky message\n" +
+                            "`/ping` - Pong!\n" +
+                            "`/invite` - Invite the bot to your server\n"
+                )
 
                 .setColor(Color.BLUE)
 

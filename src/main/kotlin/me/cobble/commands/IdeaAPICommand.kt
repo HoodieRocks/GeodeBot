@@ -8,6 +8,8 @@ import org.javacord.api.DiscordApi
 import org.javacord.api.entity.message.embed.EmbedBuilder
 import org.javacord.api.event.interaction.SlashCommandCreateEvent
 import org.javacord.api.interaction.SlashCommand
+import org.javacord.api.interaction.SlashCommandOption
+import org.javacord.api.interaction.SlashCommandOptionType
 import org.javacord.api.listener.interaction.SlashCommandCreateListener
 import java.awt.Color
 import java.net.URL
@@ -17,13 +19,16 @@ class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
 
     init {
         api.addSlashCommandCreateListener(this)
-        SlashCommand.with("idea", "Here's something to do!").createGlobal(api).join()
+        SlashCommand.with("idea", "Here's something to do!",
+            listOf(SlashCommandOption.create(SlashCommandOptionType.STRING, "type", "Type of activity, see https://www.boredapi.com/documentation#endpoints-accessibility-range",
+                false))).createGlobal(api).join()
     }
 
     override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
         val interaction = event?.slashCommandInteraction
-        if(interaction?.commandName == "idea") {
-            val url = URL("https://www.boredapi.com/api/activity")
+        if (interaction?.commandName == "idea") {
+            val type = interaction.getOptionStringValueByIndex(0)
+            val url = URL("https://www.boredapi.com/api/activity?type=$type")
             val client = OkHttpClient()
             val request = Request.Builder()
                 .url(url)

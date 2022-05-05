@@ -21,7 +21,8 @@ class PingCommand(api: DiscordApi) : SlashCommandCreateListener {
                 EmbedBuilder()
                     .setTitle("Pong!")
                     .setDescription("The bot is alive!")
-                    .setColor(Color.GREEN)).respond()
+                    .setColor(Color.GREEN)
+            ).respond()
         }
     }
 }
