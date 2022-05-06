@@ -31,6 +31,10 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+tasks.build {
+    dependsOn("shadowJar")
+}
+
 application {
     mainClass.set("me.cobble.MainKt")
 }

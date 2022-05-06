@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import java.awt.Color
 
-class HelpCommand(private val api: JDA, private val prefix: String) : ListenerAdapter() {
+class HelpCommand(private val api: JDA) : ListenerAdapter() {
 
     init {
         api.addEventListener(this)

@@ -19,7 +19,7 @@ fun main() {
     PingCommand(client)
     IdeaAPICommand(client)
     UselessFactCommand(client)
-    HelpCommand(client, prefix)
+    HelpCommand(client)
     InviteCommand(client)
     IdeaGeneratorCommand(client)
     println("Loaded Command Listeners")
