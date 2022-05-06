@@ -17,7 +17,7 @@ class IdeaAPICommand(api: JDA) : ListenerAdapter() {
     init {
         api.addEventListener(this)
         api.upsertCommand("todo", "Here's something to do!")
-            .addOption(OptionType.STRING, "type", "Get a random task of a specific type", false)
+            .addOption(OptionType.STRING, "type", "Get a random task of a specific type", false).queue()
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {

@@ -19,7 +19,7 @@ class InviteCommand(private val api: JDA) : ListenerAdapter() {
             interaction.replyEmbeds(
                 EmbedBuilder()
                     .setTitle("Invite me to your server!")
-                    .setDescription("[Click here](${api.getInviteUrl(Permission.ADMINISTRATOR)}) to invite me to your server!")
+                    .setDescription("[Click here](${api.retrieveApplicationInfo().complete().getInviteUrl(Permission.ADMINISTRATOR)}) to invite me to your server!")
                     .build()
             ).complete()
         }
