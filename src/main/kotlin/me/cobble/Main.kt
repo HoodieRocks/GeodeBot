@@ -15,6 +15,7 @@ fun main() {
     val client: JDA = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build()
 
     client.presence.setPresence(Activity.listening("For commands"), false)
+    client.updateCommands()
 
     PingCommand(client)
     IdeaAPICommand(client)
