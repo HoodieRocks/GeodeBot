@@ -36,7 +36,6 @@ fun main() {
     println("Initializing Runtime Hooks")
 
     StickyUtils.setAllStickyMessages(PersistenceUtility.load())
-    client.updateCommands()
 
     println("Indigo is now running")
 }
