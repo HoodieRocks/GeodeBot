@@ -14,8 +14,7 @@ fun main() {
     println("Logging in...")
     val client: JDA = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build()
 
-    client.presence.setPresence(Activity.listening("For commands"), false)
-    client.updateCommands()
+    client.presence.setPresence(Activity.listening("slash commands"), false)
 
     PingCommand(client)
     IdeaAPICommand(client)
@@ -37,6 +36,7 @@ fun main() {
     println("Initializing Runtime Hooks")
 
     StickyUtils.setAllStickyMessages(PersistenceUtility.load())
+    client.updateCommands()
 
     println("Indigo is now running")
 }
