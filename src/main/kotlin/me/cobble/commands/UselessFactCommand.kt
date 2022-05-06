@@ -2,26 +2,26 @@ package me.cobble.commands
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
+import net.dv8tion.jda.api.interactions.commands.OptionType
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.javacord.api.DiscordApi
-import org.javacord.api.entity.message.embed.EmbedBuilder
-import org.javacord.api.event.interaction.SlashCommandCreateEvent
-import org.javacord.api.interaction.SlashCommand
-import org.javacord.api.listener.interaction.SlashCommandCreateListener
 import java.awt.Color
 import java.net.URL
 
-class UselessFactCommand(api: DiscordApi) : SlashCommandCreateListener {
+class UselessFactCommand(api: JDA) : ListenerAdapter() {
 
     init {
-        api.addSlashCommandCreateListener(this)
-        SlashCommand.with("fact", "Get a random fact").createGlobal(api).join()
+        api.addEventListener(this)
+        api.upsertCommand("fact", "Get a random fact").queue()
     }
 
-    override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
-        val interaction = event?.slashCommandInteraction
-        if (interaction?.commandName == "fact") {
+    override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
+        val interaction = event.interaction
+        if (interaction.name == "fact") {
             val url = URL("https://uselessfacts.jsph.pl/random.json?language=en")
             val client = OkHttpClient()
             val request = Request.Builder()
@@ -29,7 +29,7 @@ class UselessFactCommand(api: DiscordApi) : SlashCommandCreateListener {
                 .build()
 
             val response = client.newCall(request).execute()
-            val activity = Json.parseToJsonElement(response.body()!!.string()).jsonObject
+            val activity = Json.parseToJsonElement(response.body!!.string()).jsonObject
 
             val embed = EmbedBuilder()
                 .setTitle("Here's a fun fact!")
@@ -38,12 +38,11 @@ class UselessFactCommand(api: DiscordApi) : SlashCommandCreateListener {
                     "Source",
                     "[${activity["source"].toString().removeFirstAndLastCharacter()}](${
                         activity["source_url"].toString().removeFirstAndLastCharacter()
-                    })"
-                )
+                    })",false)
                 .setFooter("Powered by https://uselessfacts.jsph.pl/")
                 .setColor(Color.CYAN)
 
-            interaction.createImmediateResponder().addEmbed(embed).respond()
+            interaction.replyEmbeds(embed.build()).complete()
 
         }
     }

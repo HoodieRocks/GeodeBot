@@ -2,31 +2,29 @@ package me.cobble
 
 import me.cobble.listeners.MessageSentListener
 import me.cobble.commands.*
-import org.javacord.api.DiscordApi
-import org.javacord.api.DiscordApiBuilder
-import org.javacord.api.entity.activity.ActivityType
 import me.cobble.utilities.PersistenceUtility
 import me.cobble.utilities.StickyUtils
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Activity
 
 const val prefix: String = "$"
 
 fun main() {
     println("Logging in...")
-    val client: DiscordApi = DiscordApiBuilder().setToken(System.getenv("BOT_TOKEN")).login().join()
+    val client: JDA = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build()
 
-    client.updateActivity(ActivityType.WATCHING, "for $prefix Commands")
-    println("Set activity to \"Watching for $prefix Commands\"")
+    client.presence.setPresence(Activity.listening("For commands"), false)
 
     PingCommand(client)
-    StickCommand(client, prefix)
-    UnstickCommand(client, prefix)
     IdeaAPICommand(client)
     UselessFactCommand(client)
     HelpCommand(client, prefix)
     InviteCommand(client)
+    IdeaGeneratorCommand(client)
     println("Loaded Command Listeners")
 
-    client.addListener(MessageSentListener())
+    client.addEventListener(MessageSentListener())
     println("Loaded misc Listeners")
 
     Runtime.getRuntime().addShutdownHook(Thread()

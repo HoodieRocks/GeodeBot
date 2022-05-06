@@ -1,16 +1,16 @@
 package me.cobble.listeners
 
-import org.javacord.api.event.message.MessageCreateEvent
-import org.javacord.api.listener.message.MessageCreateListener
 import me.cobble.utilities.StickyUtils
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 
-class MessageSentListener : MessageCreateListener {
+class MessageSentListener : ListenerAdapter() {
 
-    override fun onMessageCreate(message: MessageCreateEvent) {
-        if (StickyUtils.getAllStickyMessages().containsKey(message.channel.id) && !message.messageAuthor.isYourself) {
+    override fun onMessageReceived(message: MessageReceivedEvent) {
+        if (StickyUtils.getAllStickyMessages().containsKey(message.channel.id) && !message.author.isBot) {
             StickyUtils.getStickyMessage(message.channel.id).let { m ->
-                message.channel.sendMessage(message.channel.getMessageById(m).get().content)
-                message.channel.getMessages(3).get().first().delete()
+                message.channel.sendMessage(message.channel.history.getMessageById(m)!!.contentDisplay)
+                message.channel.history.retrievePast(3).complete()[0].delete().complete()
             }
 
         }

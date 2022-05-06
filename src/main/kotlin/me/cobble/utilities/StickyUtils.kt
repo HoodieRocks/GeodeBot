@@ -3,25 +3,25 @@ package me.cobble.utilities
 class StickyUtils {
 
     companion object {
-        private val stickyMessages: MutableMap<Long, Long> = mutableMapOf()
+        private val stickyMessages: MutableMap<String, String> = mutableMapOf()
 
-        fun getStickyMessage(key: Long): Long {
-            return stickyMessages[key] ?: 0
+        fun getStickyMessage(key: String): String {
+            return stickyMessages[key] ?: ""
         }
 
-        fun setStickyMessage(key: Long, value: Long) {
+        fun setStickyMessage(key: String, value: String) {
             stickyMessages[key] = value
         }
 
-        fun removeStickyMessage(key: Long) {
+        fun removeStickyMessage(key: String) {
             stickyMessages.remove(key)
         }
 
-        fun getAllStickyMessages(): MutableMap<Long, Long> {
+        fun getAllStickyMessages(): MutableMap<String, String> {
             return stickyMessages
         }
 
-        fun setAllStickyMessages(stickyMessages: MutableMap<Long, Long>) {
+        fun setAllStickyMessages(stickyMessages: MutableMap<String, String>) {
             this.stickyMessages.clear()
             this.stickyMessages.putAll(stickyMessages)
         }

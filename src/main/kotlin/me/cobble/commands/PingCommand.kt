@@ -1,28 +1,28 @@
 package me.cobble.commands
 
-import org.javacord.api.DiscordApi
-import org.javacord.api.entity.message.embed.EmbedBuilder
-import org.javacord.api.event.interaction.SlashCommandCreateEvent
-import org.javacord.api.interaction.SlashCommand
-import org.javacord.api.listener.interaction.SlashCommandCreateListener
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 import java.awt.Color
 
-class PingCommand(api: DiscordApi) : SlashCommandCreateListener {
+class PingCommand(api: JDA) : ListenerAdapter() {
 
     init {
-        api.addSlashCommandCreateListener(this)
-        SlashCommand.with("ping", "Pong!").createGlobal(api).join()
+        api.addEventListener(this)
+        api.upsertCommand("ping", "Pong!").queue()
     }
 
-    override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
-        val interaction = event?.slashCommandInteraction
-        if (interaction?.commandName == "ping") {
-            interaction.createImmediateResponder().addEmbed(
+    override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
+        val interaction = event.interaction
+        if (interaction.name == "ping") {
+            interaction.replyEmbeds(
                 EmbedBuilder()
                     .setTitle("Pong!")
                     .setDescription("The bot is alive!")
                     .setColor(Color.GREEN)
-            ).respond()
+                    .build()
+            ).complete()
         }
     }
 }

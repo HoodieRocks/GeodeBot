@@ -1,37 +1,29 @@
 package me.cobble.commands
 
-import org.javacord.api.DiscordApi
-import org.javacord.api.entity.message.embed.EmbedBuilder
-import org.javacord.api.event.interaction.SlashCommandCreateEvent
-import org.javacord.api.interaction.SlashCommand
-import org.javacord.api.listener.interaction.SlashCommandCreateListener
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 import java.awt.Color
 
-class HelpCommand(api: DiscordApi, private val prefix: String) : SlashCommandCreateListener {
+class HelpCommand(private val api: JDA, private val prefix: String) : ListenerAdapter() {
 
     init {
-        api.addSlashCommandCreateListener(this)
-        SlashCommand.with("help", "List commands and features of Amethyst").createGlobal(api).join()
+        api.addEventListener(this)
+        api.upsertCommand("help", "List commands and features of Amethyst").queue()
     }
 
-    override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
-        val interaction = event?.slashCommandInteraction
-        if (interaction?.commandName == "help") {
+    override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
+        val interaction = event.interaction
+        if (interaction.name == "help") {
             val embed = EmbedBuilder()
-                .setTitle("All commands")
-                .setDescription(
-                    "`${prefix}help` - Shows this message\n" +
-                            "`/fact` - Shows a random fact\n" +
-                            "`/idea` - Shows a random idea\n" +
-                            "`${prefix}stick` - Sets a sticky message to last message\n" +
-                            "`${prefix}unstick` - Removes the sticky message\n" +
-                            "`/ping` - Pong!\n" +
-                            "`/invite` - Invite the bot to your server\n"
-                )
 
-                .setColor(Color.BLUE)
-
-            interaction.createImmediateResponder().addEmbed(embed).respond()
+            embed.setTitle("All commands")
+            api.retrieveCommands().complete().forEach {
+                embed.addField(it.name, it.description, false)
+            }
+            embed.setColor(Color.BLUE)
+            interaction.replyEmbeds(embed.build()).complete()
         }
     }
 }

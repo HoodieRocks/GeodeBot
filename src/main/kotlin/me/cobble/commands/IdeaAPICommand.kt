@@ -2,32 +2,27 @@ package me.cobble.commands
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
+import net.dv8tion.jda.api.interactions.commands.OptionType
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.javacord.api.DiscordApi
-import org.javacord.api.entity.message.embed.EmbedBuilder
-import org.javacord.api.event.interaction.SlashCommandCreateEvent
-import org.javacord.api.interaction.SlashCommand
-import org.javacord.api.interaction.SlashCommandOption
-import org.javacord.api.interaction.SlashCommandOptionType
-import org.javacord.api.listener.interaction.SlashCommandCreateListener
 import java.awt.Color
 import java.net.URL
-import java.text.DecimalFormat
 
-class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
+class IdeaAPICommand(api: JDA) : ListenerAdapter() {
 
     init {
-        api.addSlashCommandCreateListener(this)
-        SlashCommand.with("idea", "Here's something to do!",
-            listOf(SlashCommandOption.create(SlashCommandOptionType.STRING, "type", "Type of activity, see https://www.boredapi.com/documentation#endpoints-accessibility-range",
-                false))).createGlobal(api).join()
+        api.addEventListener(this)
+        api.upsertCommand("todo", "Here's something to do!").addOption(OptionType.STRING, "type", "Get a random fact of a specific type", false)
     }
 
-    override fun onSlashCommandCreate(event: SlashCommandCreateEvent?) {
-        val interaction = event?.slashCommandInteraction
-        if (interaction?.commandName == "idea") {
-            val type: String = interaction.getOptionStringValueByIndex(0).orElse("")
+    override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
+        val interaction = event.interaction
+        if (interaction.name == "todo") {
+            val type: String = if(interaction.getOption("type") == null) "" else interaction.getOption("type")!!.asString
             val url = URL("https://www.boredapi.com/api/activity?type=$type")
             val client = OkHttpClient()
             val request = Request.Builder()
@@ -35,28 +30,30 @@ class IdeaAPICommand(api: DiscordApi) : SlashCommandCreateListener {
                 .build()
 
             val response = client.newCall(request).execute()
-            val activity = Json.parseToJsonElement(response.body()!!.string()).jsonObject
+            val activity = Json.parseToJsonElement(response.body!!.string()).jsonObject
             val embed: EmbedBuilder
             if(activity["error"] == null) {
                 embed = EmbedBuilder()
                     .setTitle("Here's something to do!")
-                    .addField("Activity", activity["activity"].toString().removeFirstLast())
-                    .addField("Type", activity["type"].toString().removeFirstLast())
-                    .addField("Participants", activity["participants"].toString().plus(" Participants"))
-                    .addField("Price", (activity["price"].toString().toFloat() * 10).toString().plus("$"))
-                    .addField("Accessibility", activity["accessibility"].toString())
+                    .addField("Activity", activity["activity"].toString().removeFirstLast(), false)
+                    .addField("Type", activity["type"].toString().removeFirstLast(), false)
+                    .addField("Participants", activity["participants"].toString().plus(" Participants"), false)
+                    .addField("Price", (activity["price"].toString().toFloat() * 10).toString().plus("$"), false)
+                    .addField("Accessibility", activity["accessibility"].toString(), false)
                     .setDescription("[Click here to learn more](https://www.boredapi.com/)")
                     .setColor(Color.CYAN)
             } else {
                 embed = EmbedBuilder()
                     .setTitle("Error")
-                    .addField("Error", activity["error"].toString().removeFirstLast())
-                    .setDescription("[Click here to learn more](https://www.boredapi.com/)")
+                    .setDescription(activity["error"].toString().removeFirstLast())
                     .setColor(Color.RED)
             }
 
-            interaction.createImmediateResponder().addEmbed(embed).respond().exceptionally {
-                interaction.createImmediateResponder().setContent("Not a valid option").respond().join()
+
+            try {
+                interaction.replyEmbeds(embed.build())
+            } catch (e: Exception) {
+                interaction.reply("Not a valid option")
             }
         }
     }
