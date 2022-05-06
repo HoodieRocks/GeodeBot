@@ -18,9 +18,9 @@ fun main() {
     PingCommand(client)
     IdeaAPICommand(client)
     UselessFactCommand(client)
-    HelpCommand(client)
     InviteCommand(client)
     IdeaGeneratorCommand(client)
+    HelpCommand(client)
     println("Loaded Command Listeners")
 
     client.addEventListener(MessageSentListener())
