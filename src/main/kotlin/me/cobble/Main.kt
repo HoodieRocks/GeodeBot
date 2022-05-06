@@ -37,5 +37,5 @@ fun main() {
     StickyUtils.setAllStickyMessages(PersistenceUtility.load())
 
     println("Indigo is now running")
-    println("${client.getInviteUrl(Permission.ADMINISTRATOR)} invite link")
+    println("${client.retrieveApplicationInfo().complete().getInviteUrl(Permission.ADMINISTRATOR)} invite link")
 }
