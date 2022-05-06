@@ -6,6 +6,7 @@ import me.cobble.utilities.PersistenceUtility
 import me.cobble.utilities.StickyUtils
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Activity
 
 fun main() {
@@ -36,4 +37,5 @@ fun main() {
     StickyUtils.setAllStickyMessages(PersistenceUtility.load())
 
     println("Indigo is now running")
+    println("${client.getInviteUrl(Permission.ADMINISTRATOR)} invite link")
 }
