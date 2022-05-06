@@ -10,7 +10,7 @@ class IdeaGeneratorCommand(api: JDA) : ListenerAdapter() {
 
     init {
         api.addEventListener(this)
-        api.upsertCommand("idea", "Generates an idea.")
+        api.getGuildById("958898007749824522")?.upsertCommand("idea", "Generates an idea.")
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
