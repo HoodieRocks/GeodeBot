@@ -52,7 +52,7 @@ class IdeaAPICommand(api: JDA) : ListenerAdapter() {
 
 
             try {
-                interaction.replyEmbeds(embed.build())
+                interaction.replyEmbeds(embed.build()).complete()
             } catch (e: Exception) {
                 interaction.reply("Not a valid option")
             }

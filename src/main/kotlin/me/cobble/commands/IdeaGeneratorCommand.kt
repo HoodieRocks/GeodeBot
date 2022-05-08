@@ -21,7 +21,7 @@ class IdeaGeneratorCommand(api: JDA) : ListenerAdapter() {
                 .addField("Idea", "Your idea is: ${Phrases.getPhrase()}", false)
                 .setColor(0x42CCAA)
                 .setFooter("Idea generator, suggested by DinoBrik")
-                .build())
+                .build()).complete()
         }
     }
 }
