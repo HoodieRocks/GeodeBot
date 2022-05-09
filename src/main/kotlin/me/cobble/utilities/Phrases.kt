@@ -69,5 +69,4 @@ class Phrases {
             return "${a.random()} ${b.random()}"
         }
     }
-
 }

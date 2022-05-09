@@ -27,7 +27,7 @@ class PingCommand(api: JDA) : ListenerAdapter() {
                     .addField("Bot Latency", "${botPing.toMillis()}ms", false)
                     .setColor(Color.GREEN)
                     .build()
-            ).complete()
+            ).queue()
         }
     }
 }

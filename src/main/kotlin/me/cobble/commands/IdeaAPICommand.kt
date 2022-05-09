@@ -23,7 +23,8 @@ class IdeaAPICommand(api: JDA) : ListenerAdapter() {
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         val interaction = event.interaction
         if (interaction.name == "todo") {
-            val type: String = if(interaction.getOption("type") == null) "" else interaction.getOption("type")!!.asString
+            val type: String =
+                if (interaction.getOption("type") == null) "" else interaction.getOption("type")!!.asString
             val url = URL("https://www.boredapi.com/api/activity?type=$type")
             val client = OkHttpClient()
             val request = Request.Builder()
@@ -33,7 +34,7 @@ class IdeaAPICommand(api: JDA) : ListenerAdapter() {
             val response = client.newCall(request).execute()
             val activity = Json.parseToJsonElement(response.body!!.string()).jsonObject
             val embed: EmbedBuilder
-            if(activity["error"] == null) {
+            if (activity["error"] == null) {
                 embed = EmbedBuilder()
                     .setTitle("Here's something to do!")
                     .addField("Activity", activity["activity"].toString().removeFirstLast(), false)
@@ -52,7 +53,7 @@ class IdeaAPICommand(api: JDA) : ListenerAdapter() {
 
 
             try {
-                interaction.replyEmbeds(embed.build()).complete()
+                interaction.replyEmbeds(embed.build()).queue()
             } catch (e: Exception) {
                 interaction.reply("Not a valid option")
             }

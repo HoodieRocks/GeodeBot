@@ -22,8 +22,8 @@ class HelpCommand(private val api: JDA) : ListenerAdapter() {
             api.retrieveCommands().complete().forEach {
                 embed.addField(it.name, it.description, false)
             }
-            embed.setColor(Color.BLUE)
-            interaction.replyEmbeds(embed.build()).complete()
+            embed.setColor(Color.MAGENTA)
+            interaction.replyEmbeds(embed.build()).queue()
         }
     }
 }

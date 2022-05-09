@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
-import net.dv8tion.jda.api.interactions.commands.OptionType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color
@@ -38,11 +37,12 @@ class UselessFactCommand(api: JDA) : ListenerAdapter() {
                     "Source",
                     "[${activity["source"].toString().removeFirstAndLastCharacter()}](${
                         activity["source_url"].toString().removeFirstAndLastCharacter()
-                    })",false)
+                    })", false
+                )
                 .setFooter("Powered by https://uselessfacts.jsph.pl/")
                 .setColor(Color.CYAN)
 
-            interaction.replyEmbeds(embed.build()).complete()
+            interaction.replyEmbeds(embed.build()).queue()
 
         }
     }

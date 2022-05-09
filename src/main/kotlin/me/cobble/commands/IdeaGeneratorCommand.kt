@@ -15,13 +15,15 @@ class IdeaGeneratorCommand(api: JDA) : ListenerAdapter() {
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         val interaction = event.interaction
-        if(interaction.name == "idea") {
-            interaction.replyEmbeds(EmbedBuilder()
-                .setTitle("Idea generator")
-                .addField("Idea", "Your idea is: ${Phrases.getPhrase()}", false)
-                .setColor(0x42CCAA)
-                .setFooter("Idea generator, suggested by DinoBrik")
-                .build()).complete()
+        if (interaction.name == "idea") {
+            interaction.replyEmbeds(
+                EmbedBuilder()
+                    .setTitle("Idea generator")
+                    .addField("Idea", "Your idea is: ${Phrases.getPhrase()}", false)
+                    .setColor(0x42CCAA)
+                    .setFooter("Idea generator, suggested by DinoBrik")
+                    .build()
+            ).queue()
         }
     }
 }
