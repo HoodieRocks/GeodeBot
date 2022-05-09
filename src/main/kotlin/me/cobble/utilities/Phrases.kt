@@ -22,10 +22,20 @@ class Phrases {
             "Algorithm",
             "Tool",
             "Weapon",
-            "Utility"
+            "Utility",
+            "Website",
+            "Program",
+            "Software",
+            "Webscript",
+            "Script",
+            "Datapack",
+            "Mod",
+            "Plugin",
+            "Library",
+            "Framework",
         )
-        private val b = listOf<String>(
-            "That Flys",
+        private val b = listOf(
+            "That Flies",
             "That Plays Music",
             "That Attacks",
             "With Technology",
@@ -33,7 +43,26 @@ class Phrases {
             "Dimension",
             "Of Horror",
             "That Is Very Funny",
-            "With Superpowers"
+            "With Superpowers",
+            "That Is Very Smart",
+            "That Is Very Clever",
+            "That Is Very Strong",
+            "That Is Very Intelligent",
+            "That Is Very Fast",
+            "With a Long Name",
+            "With a Short Name",
+            "That does something",
+            "That is something",
+            "Controlled by a computer",
+            "That is a game",
+            "That is a website",
+            "That is a program",
+            "That is a software",
+            "That is a webscript",
+            "That is a script",
+            "That is a tool",
+            "That is a weapon",
+            "That is a utility",
         )
 
         fun getPhrase(): String {
