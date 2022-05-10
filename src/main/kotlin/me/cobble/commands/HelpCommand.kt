@@ -20,7 +20,7 @@ class HelpCommand(private val api: JDA) : ListenerAdapter() {
 
             embed.setTitle("All commands")
             api.retrieveCommands().complete().forEach {
-                embed.addField(it.name, it.description, false)
+                embed.addField(it.name, "`${it.description}`", false)
             }
             embed.setColor(Color.MAGENTA)
             interaction.replyEmbeds(embed.build()).queue()

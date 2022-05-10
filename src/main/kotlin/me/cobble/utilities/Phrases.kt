@@ -26,12 +26,11 @@ class Phrases {
             "Website",
             "Program",
             "Software",
-            "Webscript",
             "Script",
             "Datapack",
             "Mod",
             "Plugin",
-            "Library",
+            "Programming Library",
             "Framework",
         )
         private val b = listOf(
