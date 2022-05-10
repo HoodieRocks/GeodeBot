@@ -12,7 +12,7 @@ import okhttp3.Request
 import java.awt.Color
 import java.net.URL
 
-class IdeaAPICommand(api: JDA) : ListenerAdapter() {
+class TodoCommand(api: JDA) : ListenerAdapter() {
 
     init {
         api.addEventListener(this)

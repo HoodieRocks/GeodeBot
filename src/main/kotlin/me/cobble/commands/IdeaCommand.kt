@@ -4,9 +4,11 @@ import me.cobble.utilities.Phrases
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
+import net.dv8tion.jda.api.interactions.components.buttons.Button
 
-class IdeaGeneratorCommand(api: JDA) : ListenerAdapter() {
+class IdeaCommand(api: JDA) : ListenerAdapter() {
 
     init {
         api.addEventListener(this)
@@ -23,7 +25,21 @@ class IdeaGeneratorCommand(api: JDA) : ListenerAdapter() {
                     .setColor(0x42CCAA)
                     .setFooter("Idea generator, suggested by DinoBrik")
                     .build()
-            ).queue()
+            ).addActionRow(Button.primary("another", "Fetch another idea")).queue()
+        }
+    }
+
+    override fun onButtonInteraction(event: ButtonInteractionEvent) {
+        val interaction = event.interaction
+        if (interaction.button.id == "another") {
+            interaction.replyEmbeds(
+                EmbedBuilder()
+                    .setTitle("Idea generator")
+                    .addField("Idea", "Your idea is: ${Phrases.getPhrase()}", false)
+                    .setColor(0x42CCAA)
+                    .setFooter("Idea generator, suggested by DinoBrik")
+                    .build()
+            ).addActionRow(Button.primary("another", "Fetch another idea")).queue()
         }
     }
 }

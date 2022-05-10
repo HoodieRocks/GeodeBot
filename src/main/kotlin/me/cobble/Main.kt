@@ -13,10 +13,10 @@ fun main() {
     client.presence.setPresence(Activity.listening("slash commands"), false)
 
     PingCommand(client)
-    IdeaAPICommand(client)
+    TodoCommand(client)
     UselessFactCommand(client)
     InviteCommand(client)
-    IdeaGeneratorCommand(client)
+    IdeaCommand(client)
     HelpCommand(client)
     println("Loaded Command Listeners")
 
