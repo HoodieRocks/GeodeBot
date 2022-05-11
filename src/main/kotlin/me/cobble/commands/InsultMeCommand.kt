@@ -14,7 +14,7 @@ class InsultMeCommand(api: JDA) : ListenerAdapter() {
 
     init {
         api.addEventListener(this)
-        api.upsertCommand("insult", "**WARNING: Offensive language**, Insults the user who invoked the command")
+        api.upsertCommand("insult", "**WARNING: Offensive language**, Insults the user who invoked the command").queue()
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
@@ -32,7 +32,7 @@ class InsultMeCommand(api: JDA) : ListenerAdapter() {
                 .addField("Created on", activity["created"].toString(), true)
                 .addField("Times shown", activity["shown"].toString(), true)
                 .addField("Comment", activity["comment"].toString(), true)
-            event.replyEmbeds(embed.build())
+            event.replyEmbeds(embed.build()).queue()
         }
     }
 }
