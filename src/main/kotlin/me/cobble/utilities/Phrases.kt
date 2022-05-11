@@ -57,7 +57,6 @@ class Phrases {
             "That is a website",
             "That is a program",
             "That is a software",
-            "That is a webscript",
             "That is a script",
             "That is a tool",
             "That is a weapon",

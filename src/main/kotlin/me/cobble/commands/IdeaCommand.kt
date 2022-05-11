@@ -25,21 +25,7 @@ class IdeaCommand(api: JDA) : ListenerAdapter() {
                     .setColor(0x42CCAA)
                     .setFooter("Idea generator, suggested by DinoBrik")
                     .build()
-            ).addActionRow(Button.primary("another", "Fetch another idea")).queue()
-        }
-    }
-
-    override fun onButtonInteraction(event: ButtonInteractionEvent) {
-        val interaction = event.interaction
-        if (interaction.button.id == "another") {
-            interaction.replyEmbeds(
-                EmbedBuilder()
-                    .setTitle("Idea generator")
-                    .addField("Idea", "Your idea is: ${Phrases.getPhrase()}", false)
-                    .setColor(0x42CCAA)
-                    .setFooter("Idea generator, suggested by DinoBrik")
-                    .build()
-            ).addActionRow(Button.primary("another", "Fetch another idea")).queue()
+            ).queue()
         }
     }
 }

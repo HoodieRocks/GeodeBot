@@ -18,6 +18,7 @@ fun main() {
     InviteCommand(client)
     IdeaCommand(client)
     HelpCommand(client)
+    InsultMeCommand(client)
     println("Loaded Command Listeners")
 
     println("Indigo is now running")
