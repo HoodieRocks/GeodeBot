@@ -29,10 +29,16 @@ class InsultMeCommand(api: JDA) : ListenerAdapter() {
             val embed: EmbedBuilder = EmbedBuilder()
             embed.setTitle(activity["insult"].toString())
                 .setColor(0xFF0000)
-                .addField("Created on", activity["created"].toString(), true)
-                .addField("Times shown", activity["shown"].toString(), true)
-                .addField("Comment", activity["comment"].toString(), true)
+                .addField("Created on", activity["created"].toString().removeFirstLast(), true)
+                .addField("Times shown", activity["shown"].toString().removeFirstLast(), true)
+                .addField("Comment", activity["comment"].toString().removeFirstLast(), true)
             event.replyEmbeds(embed.build()).queue()
         }
+    }
+
+
+    // remove first and last letter of string
+    private fun String.removeFirstLast(): String {
+        return this.substring(1, this.length - 1)
     }
 }
