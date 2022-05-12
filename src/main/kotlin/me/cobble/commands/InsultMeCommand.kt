@@ -27,11 +27,14 @@ class InsultMeCommand(api: JDA) : ListenerAdapter() {
             val response = client.newCall(request).execute()
             val activity = Json.parseToJsonElement(response.body!!.string()).jsonObject
             val embed: EmbedBuilder = EmbedBuilder()
-            embed.setTitle(activity["insult"].toString())
+            embed.setTitle("Warning: Offensive Language")
                 .setColor(0xFF0000)
+                .setDescription("||${activity["insult"].toString()}||")
                 .addField("Created on", activity["created"].toString().removeFirstLast(), true)
                 .addField("Times shown", activity["shown"].toString().removeFirstLast(), true)
-                .addField("Comment", activity["comment"].toString().removeFirstLast(), true)
+            if(activity["comment"].toString().isNotEmpty()) {
+                embed.addField("Comment", activity["comment"].toString().removeFirstLast(), true)
+            }
             event.replyEmbeds(embed.build()).queue()
         }
     }

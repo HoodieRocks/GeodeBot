@@ -21,6 +21,9 @@ dependencies {
     implementation("net.dv8tion:JDA:5.0.0-alpha.11") {
         exclude("opus-java")
     }
+    // https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver
+    implementation("org.mongodb:mongodb-driver-sync:4.6.0")
+
 }
 
 tasks.test {
