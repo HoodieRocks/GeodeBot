@@ -8,9 +8,7 @@ import net.dv8tion.jda.api.entities.Activity
 
 fun main() {
     println("Logging in...")
-    val client: JDA = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build()
-
-    client.presence.setPresence(Activity.listening("slash commands"), false)
+    val client = JDABuilder.createDefault(System.getenv("BOT_TOKEN"))
 
     PingCommand(client)
     TodoCommand(client)
@@ -19,8 +17,16 @@ fun main() {
     IdeaCommand(client)
     HelpCommand(client)
     InsultMeCommand(client)
+
+    for (int in 0..10) {
+        client.useSharding(int, 10)
+            .build()
+    }
+
+
+    client.build().presence.setPresence(Activity.listening("slash commands"), false)
+
     println("Loaded Command Listeners")
 
     println("Indigo is now running")
-    println("${client.retrieveApplicationInfo().complete().getInviteUrl(Permission.ADMINISTRATOR)} invite link")
 }

@@ -4,17 +4,17 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.net.URL
 
-class InsultMeCommand(api: JDA) : ListenerAdapter() {
+class InsultMeCommand(api: JDABuilder) : ListenerAdapter() {
 
     init {
-        api.addEventListener(this)
-        api.upsertCommand("insult", "**WARNING: Offensive language**, Insults the user who invoked the command").queue()
+        api.build().upsertCommand("insult", "**WARNING: Offensive language**, Insults the user who invoked the command").queue()
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {

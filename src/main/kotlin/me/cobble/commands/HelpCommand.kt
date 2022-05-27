@@ -2,15 +2,15 @@ package me.cobble.commands
 
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import java.awt.Color
 
-class HelpCommand(private val api: JDA) : ListenerAdapter() {
+class HelpCommand(private val api: JDABuilder) : ListenerAdapter() {
 
     init {
-        api.addEventListener(this)
-        api.upsertCommand("help", "List commands and features of Amethyst").queue()
+        api.build().upsertCommand("help", "List commands and features of Amethyst").queue()
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
@@ -19,7 +19,7 @@ class HelpCommand(private val api: JDA) : ListenerAdapter() {
             val embed = EmbedBuilder()
 
             embed.setTitle("All commands")
-            api.retrieveCommands().complete().forEach {
+            api.build().retrieveCommands().complete().forEach {
                 embed.addField(it.name, "`${it.description}`", false)
             }
             embed.setColor(Color.MAGENTA)

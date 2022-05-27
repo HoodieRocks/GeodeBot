@@ -4,6 +4,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import okhttp3.OkHttpClient
@@ -11,11 +12,10 @@ import okhttp3.Request
 import java.awt.Color
 import java.net.URL
 
-class UselessFactCommand(api: JDA) : ListenerAdapter() {
+class UselessFactCommand(api: JDABuilder) : ListenerAdapter() {
 
     init {
-        api.addEventListener(this)
-        api.upsertCommand("fact", "Get a random fact").queue()
+        api.build().upsertCommand("fact", "Get a random fact").queue()
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {

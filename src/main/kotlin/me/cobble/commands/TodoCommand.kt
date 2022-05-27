@@ -4,6 +4,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.OptionType
@@ -12,11 +13,10 @@ import okhttp3.Request
 import java.awt.Color
 import java.net.URL
 
-class TodoCommand(api: JDA) : ListenerAdapter() {
+class TodoCommand(api: JDABuilder) : ListenerAdapter() {
 
     init {
-        api.addEventListener(this)
-        api.upsertCommand("todo", "Here's something to do!")
+        api.build().upsertCommand("todo", "Here's something to do!")
             .addOption(OptionType.STRING, "type", "Get a random task of a specific type", false).queue()
     }
 

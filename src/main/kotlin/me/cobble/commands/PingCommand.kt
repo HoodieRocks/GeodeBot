@@ -2,17 +2,17 @@ package me.cobble.commands
 
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import java.awt.Color
 import java.time.Duration
 import java.time.LocalDateTime
 
-class PingCommand(api: JDA) : ListenerAdapter() {
+class PingCommand(api: JDABuilder) : ListenerAdapter() {
 
     init {
-        api.addEventListener(this)
-        api.upsertCommand("ping", "Pong!").queue()
+        api.build().upsertCommand("ping", "Pong!").queue()
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
