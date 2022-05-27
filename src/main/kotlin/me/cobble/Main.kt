@@ -21,10 +21,8 @@ fun main() {
     for (int in 0..10) {
         client.useSharding(int, 10)
             .build()
+            .presence.setPresence(Activity.listening("slash commands | shard $int"), false)
     }
-
-
-    client.build().presence.setPresence(Activity.listening("slash commands"), false)
 
     println("Loaded Command Listeners")
 
