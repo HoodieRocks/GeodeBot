@@ -1,25 +1,33 @@
 package me.cobble
 
+import io.github.cdimascio.dotenv.dotenv
 import me.cobble.commands.*
-import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
-import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Activity
-import net.dv8tion.jda.api.sharding.ShardManager
 
 fun main() {
     println("Logging in...")
-    val client = JDABuilder.createDefault(System.getenv("BOT_TOKEN"))
 
-    client.addEventListeners(PingCommand(client),
-    TodoCommand(client),
-    UselessFactCommand(client),
-    InviteCommand(client),
-    IdeaCommand(client),
-    HelpCommand(client),
-    InsultMeCommand(client))
+    val token = if(System.getProperty("os.name").contains("Windows")) dotenv {
+        ignoreIfMalformed = true
+        ignoreIfMissing = true
+    }["BOT_TOKEN"] else System.getenv("BOT_TOKEN")
 
-    for (int in 0..10) {
+    val client = JDABuilder.createDefault(token)
+
+    client.addEventListeners(
+        PingCommand(client),
+        TodoCommand(client),
+        UselessFactCommand(client),
+        InviteCommand(client),
+        IdeaCommand(client),
+        EightBallCommand(client),
+        InsultMeCommand(client),
+        PasswordGenCommand(client),
+        HelpCommand(client),
+    )
+
+    for (int in 0..4) {
         client.useSharding(int, 10)
             .build()
             .presence.setPresence(Activity.listening("slash commands | shard $int"), false)

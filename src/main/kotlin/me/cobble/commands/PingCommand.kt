@@ -1,7 +1,6 @@
 package me.cobble.commands
 
 import net.dv8tion.jda.api.EmbedBuilder
-import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
@@ -23,8 +22,9 @@ class PingCommand(api: JDABuilder) : ListenerAdapter() {
                 EmbedBuilder()
                     .setTitle("Pong!")
                     .setDescription("The bot is alive!")
-                    .addField("API Latency", "${event.jda.gatewayPing}ms", false)
-                    .addField("Bot Latency", "${botPing.toMillis()}ms", false)
+                    .addField("API Latency", "${event.jda.gatewayPing}ms", true)
+                    .addField("Bot Latency", "${botPing.toMillis()}ms", true)
+                    .addField("Shard ID", "${event.jda.shardInfo.shardId}", true)
                     .setColor(Color.GREEN)
                     .build()
             ).queue()
