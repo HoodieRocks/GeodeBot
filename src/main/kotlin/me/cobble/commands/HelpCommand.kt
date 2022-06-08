@@ -22,7 +22,7 @@ class HelpCommand(private val api: JDABuilder) : ListenerAdapter() {
                 embed.addField(it.name, "`${it.description}`", false)
             }
             embed.setColor(Color.MAGENTA)
-            interaction.replyEmbeds(embed.build()).queue()
+            interaction.replyEmbeds(embed.build()).setEphemeral(true).queue()
         }
     }
 }

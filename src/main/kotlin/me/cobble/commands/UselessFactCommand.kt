@@ -41,7 +41,7 @@ class UselessFactCommand(api: JDABuilder) : ListenerAdapter() {
                 .setFooter("Powered by https://uselessfacts.jsph.pl/")
                 .setColor(Color.CYAN)
 
-            interaction.replyEmbeds(embed.build()).queue()
+            interaction.replyEmbeds(embed.build()).setEphemeral(true).queue()
 
         }
     }

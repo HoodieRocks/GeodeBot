@@ -20,12 +20,12 @@ class EightBallCommand(api: JDABuilder) : ListenerAdapter() {
                     .addField("Your prediction", shake(), false)
                     .setColor(0xF3B32D)
                     .build()
-            ).queue()
+            ).setEphemeral(true).queue()
         }
     }
 
     private fun shake(): String {
-        val options = listOf("Yes","No","Maybe","Probably","Probably Not","Certain","Impossible","Ask Again Later")
+        val options = listOf("Hazy","Try Again.","Ask Again Later.", "Better Not Tell You Now.", "Cannot Predict Now.", "Concentrate and Ask Again.", "Don't Count on It.", "My Reply is No.", "My Sources Say No.", "Outlook Not So Good.", "Very Doubtful.", "Yes.", "Signs Point to Yes.")
         return options.random()
     }
 }
