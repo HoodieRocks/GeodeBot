@@ -1,7 +1,8 @@
 package me.cobble
 
 import io.github.cdimascio.dotenv.dotenv
-import me.cobble.commands.*
+import me.cobble.commands.`fun`.*
+import me.cobble.commands.utility.*
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 
@@ -24,16 +25,17 @@ fun main() {
         EightBallCommand(client),
         InsultMeCommand(client),
         PasswordGenCommand(client),
-        HelpCommand(client),
+        TicketCommand(client),
+        HelpCommand(client)
     )
 
-    for (int in 0..4) {
-        client.useSharding(int, 10)
+    for (int in 0..2) {
+        client.useSharding(int, 3)
             .build()
+            .awaitReady()
             .presence.setPresence(Activity.listening("slash commands | shard $int"), false)
     }
 
     println("Loaded Command Listeners")
-
     println("Indigo is now running")
 }
