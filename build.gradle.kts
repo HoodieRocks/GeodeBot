@@ -17,6 +17,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     implementation("com.squareup.okhttp3:okhttp:3.9.1")
     implementation("io.github.cdimascio:dotenv-kotlin:6.3.1")
+    implementation("org.mongodb:mongo-java-driver:3.12.11")
     implementation("net.dv8tion:JDA:5.0.0-alpha.11") {
         exclude("opus-java")
     }
