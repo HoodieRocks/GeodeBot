@@ -4,6 +4,7 @@ import io.github.cdimascio.dotenv.dotenv
 import me.cobble.commands.`fun`.*
 import me.cobble.commands.utility.*
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
 
 fun main() {
@@ -26,14 +27,16 @@ fun main() {
         InsultMeCommand(client),
         PasswordGenCommand(client),
         TicketCommand(client),
+        XKCDCommand(client),
+        InfoCommand(client),
         HelpCommand(client)
     )
 
     for (int in 0..2) {
-        client.useSharding(int, 3)
-            .build()
-            .awaitReady()
-            .presence.setPresence(Activity.listening("slash commands | shard $int"), false)
+        val shard = client.useSharding(int, 3).build()
+        shard.presence.setStatus(OnlineStatus.IDLE)
+        shard.awaitReady().presence.setPresence(Activity.listening("slash commands | shard $int"), false)
+        shard.presence.setStatus(OnlineStatus.ONLINE)
     }
 
     println("Loaded Command Listeners")

@@ -23,7 +23,7 @@ class PasswordGenCommand(api: JDABuilder) : ListenerAdapter() {
                     .setDescription("Your generated password: `${generatePassword(interaction.getOption("length")?.asInt ?: 8)}`")
                     .setColor(0xCDCDCD)
                     .build()
-            ).setEphemeral(true).queue()
+            ).queue()
         }
     }
 

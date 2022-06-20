@@ -35,7 +35,7 @@ class InsultMeCommand(api: JDABuilder) : ListenerAdapter() {
             if (activity["comment"].toString().isNotEmpty()) {
                 embed.addField("Comment", activity["comment"].toString().removeFirstLast(), true)
             }
-            event.replyEmbeds(embed.build()).setEphemeral(true).queue()
+            event.replyEmbeds(embed.build()).queue()
         }
     }
 

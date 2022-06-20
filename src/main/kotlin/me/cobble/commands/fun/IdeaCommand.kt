@@ -22,7 +22,7 @@ class IdeaCommand(api: JDABuilder) : ListenerAdapter() {
                     .setColor(0x42CCAA)
                     .setFooter("Idea generator, suggested by DinoBrik")
                     .build()
-            ).setEphemeral(true).queue()
+            ).queue()
         }
     }
 }

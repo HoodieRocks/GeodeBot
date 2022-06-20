@@ -52,7 +52,7 @@ class TodoCommand(api: JDABuilder) : ListenerAdapter() {
 
 
             try {
-                interaction.replyEmbeds(embed.build()).setEphemeral(true).queue()
+                interaction.replyEmbeds(embed.build()).queue()
             } catch (e: Exception) {
                 interaction.reply("Not a valid option")
             }

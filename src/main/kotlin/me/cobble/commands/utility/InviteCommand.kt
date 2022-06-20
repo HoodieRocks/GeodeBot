@@ -18,12 +18,13 @@ class InviteCommand(private val api: JDABuilder) : ListenerAdapter() {
             interaction.replyEmbeds(
                 EmbedBuilder()
                     .setTitle("Invite me to your server!")
-                    .setDescription(
+                    .setThumbnail("https://cdn.discordapp.com/avatars/963885994468335736/7ce0ad7a9b5cf58861563910ebc81f7d.webp?size=256")
+                    .setDescription("Thank you for inviting Amethyst to your server")
+                    .addField("Link",
                         "[Click here](${
                             api.build().retrieveApplicationInfo().complete().getInviteUrl(Permission.ADMINISTRATOR)
                                 .replace("scope=bot", "scope=applications.commands")
-                        }) to invite me to your server!"
-                    )
+                        }) to invite me to your server!", false)
                     .build()
             ).queue()
         }
