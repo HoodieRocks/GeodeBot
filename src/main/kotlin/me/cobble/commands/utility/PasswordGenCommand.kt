@@ -27,10 +27,13 @@ class PasswordGenCommand(api: JDABuilder) : ListenerAdapter() {
         }
     }
 
-    private fun generatePassword(length: Int?): String {
+    private fun generatePassword(length: Int): String {
         val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+"
         val pass = StringBuilder()
-        for (i in 0 until length!!) {
+        if (length > 512) {
+            return "Password exceeds 512 characters"
+        }
+        for (i in 0 until length) {
             pass.append(chars.random())
         }
         return pass.toString()

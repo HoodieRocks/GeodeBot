@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.entities.Activity
 fun main() {
     println("Logging in...")
 
-    val token = if(System.getProperty("os.name").contains("Windows")) dotenv {
+    val token = if (System.getProperty("os.name").contains("Windows")) dotenv {
         ignoreIfMalformed = true
         ignoreIfMissing = true
     }["BOT_TOKEN"] else System.getenv("BOT_TOKEN")
@@ -29,13 +29,14 @@ fun main() {
         TicketCommand(client),
         XKCDCommand(client),
         InfoCommand(client),
+        TechnoMemorialCommand(),
         HelpCommand(client)
     )
 
     for (int in 0..2) {
         val shard = client.useSharding(int, 3).build()
         shard.presence.setStatus(OnlineStatus.IDLE)
-        shard.awaitReady().presence.setPresence(Activity.listening("slash commands | shard $int"), false)
+        shard.awaitReady().presence.setPresence(Activity.listening("slash commands | shard ${int + 1}"), false)
         shard.presence.setStatus(OnlineStatus.ONLINE)
     }
 

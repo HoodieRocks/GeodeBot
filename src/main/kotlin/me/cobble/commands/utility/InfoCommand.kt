@@ -30,7 +30,8 @@ class InfoCommand(private val api: JDABuilder) : ListenerAdapter() {
                         })", true
                     )
                     .addField("Ping", "/ping", true)
-                    .build()).queue()
+                    .build()
+            ).queue()
         }
     }
 }

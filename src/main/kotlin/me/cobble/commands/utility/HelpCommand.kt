@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.Command
-import java.awt.Color
 import java.util.*
 
 class HelpCommand(private val api: JDABuilder) : ListenerAdapter() {
@@ -25,7 +24,9 @@ class HelpCommand(private val api: JDABuilder) : ListenerAdapter() {
             commands.forEach {
                 embed.addField(it.name, "`${it.description}`", false)
             }
-            embed.setColor(Color.MAGENTA)
+            embed
+                .setColor(0xccaed9)
+                .setThumbnail("https://cdn.discordapp.com/avatars/963885994468335736/7ce0ad7a9b5cf58861563910ebc81f7d.webp?size=256")
             interaction.replyEmbeds(embed.build()).queue()
         }
     }

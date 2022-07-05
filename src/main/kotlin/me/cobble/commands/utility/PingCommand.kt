@@ -6,8 +6,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import java.awt.Color
 import java.time.Duration
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
@@ -20,7 +18,10 @@ class PingCommand(api: JDABuilder) : ListenerAdapter() {
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         val interaction = event.interaction
         if (interaction.name == "ping") {
-            val botPing = Duration.between(interaction.timeCreated.toZonedDateTime().withZoneSameInstant(ZoneOffset.UTC), ZonedDateTime.now(ZoneOffset.UTC)).abs().toMillis()
+            val botPing = Duration.between(
+                interaction.timeCreated.toZonedDateTime().withZoneSameInstant(ZoneOffset.UTC),
+                ZonedDateTime.now(ZoneOffset.UTC)
+            ).abs().toMillis()
             interaction.replyEmbeds(
                 EmbedBuilder()
                     .setTitle("Pong!")

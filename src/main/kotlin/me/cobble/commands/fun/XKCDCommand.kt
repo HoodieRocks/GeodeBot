@@ -1,7 +1,6 @@
 package me.cobble.commands.`fun`
 
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import me.cobble.utilities.Utils
 import net.dv8tion.jda.api.EmbedBuilder
@@ -38,7 +37,11 @@ class XKCDCommand(api: JDABuilder) : ListenerAdapter() {
                 .addField("Number", json["num"].toString(), true)
                 .addField(
                     "Date",
-                    "${DateFormatSymbols.getInstance().months[unquote(json["month"].toString()).toInt() - 1]} ${unquote(json["day"].toString())}, ${
+                    "${DateFormatSymbols.getInstance().months[unquote(json["month"].toString()).toInt() - 1]} ${
+                        unquote(
+                            json["day"].toString()
+                        )
+                    }, ${
                         unquote(json["year"].toString())
                     }",
                     true
@@ -51,6 +54,6 @@ class XKCDCommand(api: JDABuilder) : ListenerAdapter() {
     }
 
     private fun unquote(str: String): String {
-        return Utils().stripQuotation(str)
+        return Utils.stripQuotation(str)
     }
 }
