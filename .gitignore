@@ -10,4 +10,3 @@ out
 .DS_Store
 build
 !build/libs
-gradle
