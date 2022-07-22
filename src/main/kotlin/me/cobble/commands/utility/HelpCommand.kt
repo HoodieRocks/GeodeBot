@@ -27,7 +27,7 @@ class HelpCommand(private val api: JDABuilder) : ListenerAdapter() {
             embed
                 .setColor(0xccaed9)
                 .setThumbnail("https://cdn.discordapp.com/avatars/963885994468335736/7ce0ad7a9b5cf58861563910ebc81f7d.webp?size=256")
-            interaction.replyEmbeds(embed.build()).queue()
+            interaction.replyEmbeds(embed.build()).setEphemeral(true).queue()
         }
     }
 }

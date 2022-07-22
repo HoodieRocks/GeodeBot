@@ -31,7 +31,7 @@ class PingCommand(api: JDABuilder) : ListenerAdapter() {
                     .addField("Shard ID", "${event.jda.shardInfo.shardId}", true)
                     .setColor(Color.GREEN)
                     .build()
-            ).queue()
+            ).setEphemeral(true).queue()
         }
     }
 }

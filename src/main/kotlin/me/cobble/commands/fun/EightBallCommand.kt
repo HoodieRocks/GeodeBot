@@ -20,7 +20,7 @@ class EightBallCommand(api: JDABuilder) : ListenerAdapter() {
                     .addField("Your prediction", shake(), false)
                     .setColor(0xF3B32D)
                     .build()
-            ).queue()
+            ).setEphemeral(true).queue()
         }
     }
 

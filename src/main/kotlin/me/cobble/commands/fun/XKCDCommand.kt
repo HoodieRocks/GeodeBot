@@ -49,7 +49,7 @@ class XKCDCommand(api: JDABuilder) : ListenerAdapter() {
                 .addField("Alt Text", json["alt"].toString(), false)
                 .setImage(unquote(json["img"].toString()))
                 .setFooter("https://xkcd.com/")
-            interaction.replyEmbeds(embed.build()).queue()
+            interaction.replyEmbeds(embed.build()).setEphemeral(true).queue()
         }
     }
 

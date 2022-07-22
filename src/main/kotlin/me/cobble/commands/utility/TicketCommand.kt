@@ -26,7 +26,8 @@ class TicketCommand(client: JDABuilder) : ListenerAdapter() {
                 SubcommandData("setup", "Setups up ticketing").addOption(
                     OptionType.CHANNEL,
                     "channel",
-                    "Channel to send message to"
+                    "Channel to send message to",
+                    true
                 )
             ).queue()
     }
