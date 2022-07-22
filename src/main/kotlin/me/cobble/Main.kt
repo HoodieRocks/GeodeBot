@@ -32,6 +32,7 @@ fun main() {
         XKCDCommand(client),
         InfoCommand(client),
         TechnoMemorialCommand(),
+        StoicQuoteCommand(client),
         HelpCommand(client)
     )
 
