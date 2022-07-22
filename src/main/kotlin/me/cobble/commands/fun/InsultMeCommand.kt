@@ -40,6 +40,8 @@ class InsultMeCommand(api: JDABuilder) : ListenerAdapter() {
     }
 
 
+
+
     // remove first and last letter of string
     private fun String.removeFirstLast(): String {
         return this.substring(1, this.length - 1)
