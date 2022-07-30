@@ -3,6 +3,7 @@ package me.cobble
 import io.github.cdimascio.dotenv.dotenv
 import me.cobble.commands.`fun`.*
 import me.cobble.commands.utility.*
+import me.cobble.listeners.LinkPostListener
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
@@ -32,7 +33,9 @@ fun main() {
         XKCDCommand(client),
         InfoCommand(client),
         TechnoMemorialCommand(),
-        HelpCommand(client)
+        HelpCommand(client),
+        // Listeners
+        LinkPostListener()
     )
 
     disableCache(client)
