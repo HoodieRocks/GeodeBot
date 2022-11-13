@@ -1,4 +1,4 @@
-package me.cobble.commands.`fun`
+package me.cobble.commands.toys
 
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDABuilder

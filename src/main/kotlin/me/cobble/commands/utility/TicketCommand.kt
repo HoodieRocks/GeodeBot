@@ -58,8 +58,8 @@ class TicketCommand(client: JDABuilder) : ListenerAdapter() {
                     }
                     return
                 } else {
-                    val channel = interaction.getOption("channel")!!.asTextChannel
-                    if (channel!!.name.startsWith("ticket-") && (interaction.member!!.hasPermission(Permission.MANAGE_CHANNEL) || channel.name.contains(
+                    val channel = interaction.getOption("channel")!!.asChannel
+                    if (channel.name.startsWith("ticket-") && (interaction.member!!.hasPermission(Permission.MANAGE_CHANNEL) || channel.name.contains(
                             interaction.user.name.lowercase()
                         ))
                     ) {
@@ -77,8 +77,8 @@ class TicketCommand(client: JDABuilder) : ListenerAdapter() {
             // SETUP
             if (interaction.subcommandName == "setup") {
                 if (interaction.getOption("channel") != null) {
-                    val channel = interaction.getOption("channel")!!.asTextChannel!!
-                    channel.sendMessageEmbeds(
+                    val channel = interaction.getOption("channel")!!.asChannel
+                    channel.asTextChannel().sendMessageEmbeds(
                         EmbedBuilder()
                             .setTitle("Tickets")
                             .setDescription("Click the button to make a ticket")
@@ -121,7 +121,7 @@ class TicketCommand(client: JDABuilder) : ListenerAdapter() {
         }
 
         val category = interaction.guild?.getCategoriesByName("tickets", true)
-        if (category != null && category.isNotEmpty()) {
+        if (!category.isNullOrEmpty()) {
             category.first().let {
                 it.textChannels.forEach { ch ->
                     if (ch.name.replace("ticket-", "") == interaction.user.name.lowercase()) {

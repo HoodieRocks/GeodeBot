@@ -16,7 +16,7 @@ class InfoCommand(private val api: JDABuilder) : ListenerAdapter() {
             event.interaction.replyEmbeds(
                 EmbedBuilder()
                     .setTitle("Info")
-                    .setDescription("Bot created and maintained by `Cobblestone#3544`")
+                    .setDescription("Bot created and maintained by <@425778239760367617>")
                     .setThumbnail("https://cdn.discordapp.com/avatars/963885994468335736/7ce0ad7a9b5cf58861563910ebc81f7d.webp?size=256")
                     .setColor(0xccaed9)
                     .addField("GitHub", "[Click Here](https://github.com/1ndiigo/)", true)
@@ -29,7 +29,7 @@ class InfoCommand(private val api: JDABuilder) : ListenerAdapter() {
                                 .replace("scope=bot", "scope=applications.commands")
                         })", true
                     )
-                    .addField("Ping", "/ping", true)
+                    .addField("Ping", "</ping:964264384727760967>", true)
                     .build()
             ).setEphemeral(true).queue()
         }

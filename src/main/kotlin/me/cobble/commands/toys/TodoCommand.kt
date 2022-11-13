@@ -1,16 +1,12 @@
-package me.cobble.commands.`fun`
+package me.cobble.commands.toys
 
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
+import me.cobble.utilities.Utils
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.OptionType
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.awt.Color
-import java.net.URL
 
 class TodoCommand(api: JDABuilder) : ListenerAdapter() {
 
@@ -24,14 +20,9 @@ class TodoCommand(api: JDABuilder) : ListenerAdapter() {
         if (interaction.name == "todo") {
             val type: String =
                 if (interaction.getOption("type") == null) "" else interaction.getOption("type")!!.asString
-            val url = URL("https://www.boredapi.com/api/activity?type=$type")
-            val client = OkHttpClient()
-            val request = Request.Builder()
-                .url(url)
-                .build()
 
-            val response = client.newCall(request).execute()
-            val activity = Json.parseToJsonElement(response.body!!.string()).jsonObject
+            val activity = Utils.makeGetRequest("https://www.boredapi.com/api/activity?type=$type")
+
             val embed: EmbedBuilder
             if (activity["error"] == null) {
                 embed = EmbedBuilder()

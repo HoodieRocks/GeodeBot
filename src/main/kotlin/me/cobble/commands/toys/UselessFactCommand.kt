@@ -1,15 +1,11 @@
-package me.cobble.commands.`fun`
+package me.cobble.commands.toys
 
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
+import me.cobble.utilities.Utils
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.awt.Color
-import java.net.URL
 
 class UselessFactCommand(api: JDABuilder) : ListenerAdapter() {
 
@@ -20,14 +16,7 @@ class UselessFactCommand(api: JDABuilder) : ListenerAdapter() {
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         val interaction = event.interaction
         if (interaction.name == "fact") {
-            val url = URL("https://uselessfacts.jsph.pl/random.json?language=en")
-            val client = OkHttpClient()
-            val request = Request.Builder()
-                .url(url)
-                .build()
-
-            val response = client.newCall(request).execute()
-            val activity = Json.parseToJsonElement(response.body!!.string()).jsonObject
+            val activity = Utils.makeGetRequest("https://uselessfacts.jsph.pl/random.json?language=en")
 
             val embed = EmbedBuilder()
                 .setTitle("Here's a fun fact!")

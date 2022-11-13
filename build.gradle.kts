@@ -13,18 +13,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-    implementation("com.squareup.okhttp3:okhttp:3.9.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation("io.github.cdimascio:dotenv-kotlin:6.3.1")
-    implementation("net.dv8tion:JDA:5.0.0-alpha.11") {
+    implementation("ch.qos.logback:logback-classic:1.4.4")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.22") {
         exclude("opus-java")
     }
 
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 tasks.build {
@@ -33,7 +28,7 @@ tasks.build {
 
 tasks.compileKotlin {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 

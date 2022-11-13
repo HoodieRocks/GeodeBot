@@ -1,17 +1,17 @@
 package me.cobble
 
 import io.github.cdimascio.dotenv.dotenv
-import me.cobble.commands.`fun`.*
+import me.cobble.commands.toys.*
 import me.cobble.commands.utility.*
-import me.cobble.listeners.LinkPostListener
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.utils.ChunkingFilter
 import net.dv8tion.jda.api.utils.cache.CacheFlag
+import org.slf4j.LoggerFactory
 
 fun main() {
-    println("Logging in...")
+    val logger = LoggerFactory.getLogger("AmethystBot")
 
     val token = if (System.getProperty("os.name").contains("Windows")) dotenv {
         ignoreIfMalformed = true
@@ -27,15 +27,11 @@ fun main() {
         InviteCommand(client),
         IdeaCommand(client),
         EightBallCommand(client),
-        InsultMeCommand(client),
-        PasswordGenCommand(client),
         TicketCommand(client),
         XKCDCommand(client),
         InfoCommand(client),
-        TechnoMemorialCommand(),
-        StoicQuoteCommand(client),
-        LinkPostListener(),
-        HelpCommand(client)
+        HelpCommand(client),
+        WordGuessGame(client)
     )
 
     disableCache(client)
@@ -47,8 +43,8 @@ fun main() {
         shard.presence.setStatus(OnlineStatus.ONLINE)
     }
 
-    println("Loaded Command Listeners")
-    println("Indigo is now running")
+    logger.info("Loaded Command Listeners")
+    logger.info("Indigo is now running")
 }
 
 fun disableCache(builder: JDABuilder) {
