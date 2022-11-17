@@ -36,12 +36,11 @@ fun main() {
 
     disableCache(client)
 
-    for (int in 0..2) {
-        val shard = client.useSharding(int, 3).build()
-        shard.presence.setStatus(OnlineStatus.IDLE)
-        shard.awaitReady().presence.setPresence(Activity.listening("slash commands | shard ${int + 1}"), false)
-        shard.presence.setStatus(OnlineStatus.ONLINE)
-    }
+    val jda = client.build()
+
+    jda.presence.setStatus(OnlineStatus.IDLE)
+    jda.awaitReady().presence.setPresence(Activity.listening("slash commands"), false)
+    jda.presence.setStatus(OnlineStatus.ONLINE)
 
     logger.info("Loaded Command Listeners")
     logger.info("Indigo is now running")
